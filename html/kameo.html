@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/cameo.css">
+    <link rel="stylesheet" href="../css/character.css">
+</head>
+<body>
+<div class="head">
+    <a href="../index.html" class="logo">
+        <header class="link">MK1</header>
+    </a>
+    <a href="character.html">
+        <div class="link" id="character">CHARACTER</div>
+    </a>
+    <a href="kameo.html">
+        <div class="link" id="cameo">KAMEO</div>
+    </a>
+    <a href="homework.html">
+        <div class="link" id="homeWork"> HOMEWORK</div>
+    </a>
+</div>
+
+<div class="kameos">
+    <div class="kameo" id="jax" style="--img: url('../img/Jax.webp')"><span>JAX</span></div>
+    <div class="kameo" id="Kano" style="--img: url('../img/Kano.webp')"><span>KANO</span></div>
+    <div class="kameo" id="Sareena" style="--img: url('../img/Sareena.webp')"><span>SAREENA</span></div>
+    <div class="kameo" id="KAMSubZero" style="--img: url('../img/KAMSubZero.webp')"><span>SUBZERO</span></div>
+    <div class="kameo" id="ScorpionK" style="--img: url('../img/Scorpion.webp')"><span>SCORPION</span></div>
+    <div class="kameo" id="Ferra" style="--img: url('../img/KAM.webp')"><span>FERRA</span></div>
+    <div class="kameo" id="Tremor" style="--img: url('../img/Tremor.webp')"><span>TREMOR</span></div>
+    <div class="kameo" id="Stryker" style="--img: url('../img/Stryker.webp')"><span>STRYKER</span></div>
+    <div class="kameo" id="Sonya" style="--img: url('../img/Sonya.webp')"><span>SONYA</span></div>
+    <div class="kameo" id="Shujinko" style="--img: url('../img/Shujinko.webp')"><span>SHUJINKO</span></div>
+    <div class="kameo" id="SektorKameo" style="--img: url('../img/SektorKameo.webp')"><span>SECTOR</span></div>
+    <div class="kameo" id="CyraxKameo" style="--img: url('../img/CyraxKameo.webp')"><span>CYRAX</span></div>
+    <div class="kameo" id="Motaro" style="--img: url('../img/Motaro.webp')"><span>MOTARO</span></div>
+    <div class="kameo" id="Goro" style="--img: url('../img/Goro.webp')"><span>GORO</span></div>
+    <div class="kameo" id="MadamBo" style="--img: url('../img/MadamBo.webp')"><span>MADAM BO</span></div>
+    <div class="kameo" id="Mavado" style="--img: url('../img/Mavado.webp')"><span>MOVADO</span></div>
+    <div class="kameo" id="KungLaoKAM" style="--img: url('../img/KungLaoKAM.webp')"><span>KUNGLAO</span></div>
+    <div class="kameo" id="janetcage" style="--img: url('../img/janetcage.png')"><span>JANET CAGE</span></div>
+    <div class="kameo" id="Khameleon" style="--img: url('../img/Khameleon.webp')"><span>KHAMELEON</span></div>
+    <div class="kameo" id="Frost" style="--img: url('../img/Frost.webp')"><span>FROST</span></div>
+    <div class="kameo" id="Darrius" style="--img: url('../img/Darrius.webp')"><span>DARRISU</span></div>
+
+</div>
+
+<div class="fm" id="kameoModal">
+    <div class="fm__box">
+        <button class="fm__close" aria-label="Закрыть">×</button>
+        <button class="fm__nav fm__prev" aria-label="Предыдущий">‹</button>
+        <button class="fm__nav fm__next" aria-label="Следующий">›</button>
+
+        <div class="fm__portrait"></div>
+
+        <div class="fm__body">
+            <h2 class="fm__name"></h2>
+            <div class="fm__tabs">
+                <button class="fm__tab active" data-tab="info">Инфо</button>
+                <button class="fm__tab" data-tab="move">Приём</button>
+                <button class="fm__tab" data-tab="video">Видео</button>
+            </div>
+            <div class="fm__content"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal1">
+        <div class="modal1_content">Регистрация</div>
+        <div class="modal1_input_content">Gmail</div>
+        <input type="text" class="inputModal" id="gmail_input">
+
+        <div class="modal1_input_content">Phone Number</div>
+        <input type="text" class="inputModal" id="phone_input">
+        <span class="result"></span>
+        <button class="modal_btn">ПРОВЕРИТЬ </button>
+
+    </div>
+</div>
+
+<script src="../js/cameos.js"></script>
+<script src="../js/cameo.js"></script>
+
+
+</body>
+</html>

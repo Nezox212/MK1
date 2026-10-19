@@ -1,0 +1,75 @@
+.tab_slider {
+    padding: 100px 0;
+}
+
+.tab_contents_block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
+
+/* блоки с текстом: скрыты, пока нет active */
+.tab_content_block {
+    display: none;
+    width: 700px;
+    height: 170px;
+    padding: 20px;
+
+    border-radius: 12.5%;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(69 65 65 / 0.59);
+}
+
+.tab_content_block.active {
+    display: flex;
+    animation: tabFade 0.5s ease;
+}
+
+@keyframes tabFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.tab_content_block p {
+    color: white;
+    margin-top: 10px;
+    text-align: justify;
+}
+
+/* кнопки */
+.tab_content_items {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.tab_content_item {
+    padding: 10px;
+    height: 40px;
+    color: white;
+    background: rgb(0 149 255 / 0.75);
+    border: 1px solid black;
+    font-size: 24px;
+
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab_content_item.active {          /* было tab_content_item_active */
+    background: rgb(0 149 255 / 0.2);
+    color: black;
+    font-weight: 600;
+    border: 1px solid white;
+}
+h4{
+    color: #20b5ff;
+    font-size: 50px;
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+}

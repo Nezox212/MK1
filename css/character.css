@@ -1,0 +1,244 @@
+body {
+    background-image: url("https://preview.redd.it/mk1-khaos-reigns-wallpaper-4k-v0-tfqk1qcururd1.png?width=1920&format=png&auto=webp&s=413e20725092c47ccb6a5b30abfbea3f8fd3d44e");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.fighters {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 5px;
+    padding: 0 10px;
+}
+.fighter {
+    --color: #ffffff;
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background-image: var(--img);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    border: 2px solid black;
+    box-sizing: border-box;
+    background-color:#0a0a0a;
+    filter: brightness(0.45) grayscale(0.5);   /* затемнены всегда */
+
+    transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+
+/* тёмный градиент снизу, чтобы имя читалось */
+.fighter::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.8), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* имя бойца */
+.fighter span {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    z-index: 1;                       /* поверх градиента */
+    transform: translateX(-50%) scale(1);
+    white-space: nowrap;
+    color: transparent;               /* в покое текста не видно */
+    font-size: clamp(11px, 1vw, 18px);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.fighter:hover {
+    transform: scale(1.15);
+    z-index: 2;
+    border-color: var(--color);
+    box-shadow: 0 0 20px var(--color);
+    filter: brightness(1) grayscale(0);
+    background-color: color-mix(in srgb, var(--color) 25%, #0a0a0a);
+}
+
+.fighter:hover::after {
+    opacity: 1;
+}
+
+.fighter:hover span {
+    color: var(--color);
+    text-shadow: 0 0 6px black;
+    transform: translateX(-50%) scale(1.4);   /* текст крупнее карточки */
+}
+
+/* цвета бойцов */
+#sub-zero     { --color: #3ea6ff; }
+#scorpion     { --color: #ffb300; }
+#smoke        { --color: #c6c2b0; }
+#kung-lao     { --color: #ca7b7b; }
+#raiden       { --color: #4fc3f7; }
+#reptile      { --color: #2ecc40; }
+#kenshi       { --color: #c62828; }
+#ashrah       { --color: #f0e6c8; }
+#johnny-cage  { --color: #ffe082; }
+#li-mei       { --color: #ab47bc; }
+#liu-kang     { --color: #ff6d00; }
+#geras        { --color: #d4a24c; }
+#baraka       { --color: #d32f2f; }
+#peacemaker   { --color: #ff7043; }
+#homelander   { --color: #2979ff; }
+#noob-saibot  { --color: #b388ff; }
+#ghostface    { --color: #877d7d; }
+#conan        { --color: #c68642; }
+#ermac        { --color: #e53935; }
+#cyrax        { --color: #ffee00; }
+#sektor       { --color: #ff3d00; }
+#takeda       { --color: #f9a825; }
+#t-1000       { --color: #b0bec5; }
+#omni-man     { --color: #ff1744; }
+#nitara       { --color: #ce93d8; }
+#reiko        { --color: #ad1457; }
+#havik        { --color: #ff8a80; }
+#tanya        { --color: #ffb74d; }
+#kitana       { --color: #42a5f5; }
+#mileena      { --color: #d81b60; }
+#sindel       { --color: #80deea; }
+#rain         { --color: #7c4dff; }
+#general-shao { --color: #ef6c00; }
+#quan-chi     { --color: #69f0ae; }
+#shang-tsung  { --color: #81c784; }
+.fighters:hover .fighter:not(:hover) {
+    filter: brightness(0.4) grayscale(0.6);
+}
+
+.fighter {
+    transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.fm {
+    --color: #ffffff;
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgb(0 0 0 / 0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.fm.open { display: flex; }
+
+body.no-scroll { overflow: hidden; }
+
+.fm__box {
+    position: relative;
+    display: flex;
+    width: min(1000px, 100%);
+    height: min(600px, 90vh);
+    background: #0a0a0a;
+    border: 3px solid var(--color);
+    box-shadow: 0 0 40px var(--color);
+    color: white;
+}
+
+.fm__portrait {
+    flex: 0 0 40%;
+    background-image: var(--img);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-color: color-mix(in srgb, var(--color) 20%, #0a0a0a);
+}
+
+.fm__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    min-width: 0;
+}
+
+.fm__name {
+    margin: 0 0 20px;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: var(--color);
+    text-shadow: 0 0 10px black;
+}
+
+.fm__tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.fm__tab {
+    padding: 8px 18px;
+    background: transparent;
+    color: #aaa;
+    border: 2px solid #333;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.fm__tab:hover { color: white; }
+
+.fm__tab.active {
+    color: var(--color);
+    border-color: var(--color);
+    background: color-mix(in srgb, var(--color) 15%, transparent);
+}
+
+.fm__content {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.fm__combo {
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.fm__combo b { color: var(--color); }
+
+.fm__video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
+
+.fm__empty { color: #777; }
+
+.fm__close,
+.fm__nav {
+    position: absolute;
+    background: rgb(0 0 0 / 0.6);
+    color: white;
+    border: 2px solid #333;
+    cursor: pointer;
+    font-size: 28px;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.fm__close:hover,
+.fm__nav:hover { color: var(--color); border-color: var(--color); }
+
+.fm__close { top: 10px; right: 10px; width: 40px; height: 40px; z-index: 2; }
+
+.fm__nav { top: 50%; width: 40px; height: 60px; transform: translateY(-50%); z-index: 2; }
+.fm__prev { left: -50px; }
+.fm__next { right: -50px; }

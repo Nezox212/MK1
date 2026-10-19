@@ -1,0 +1,103 @@
+.kameos {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 0 10px;
+}
+.kameo {
+    --color: #ffffff;
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background-image: var(--img);
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    border: 2px solid black;
+    box-sizing: border-box;
+    background-color:#0a0a0a;
+    filter: brightness(0.45) grayscale(0.5);   /* затемнены всегда */
+
+    transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+
+/* тёмный градиент снизу, чтобы имя читалось */
+.kameo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.8), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* имя бойца */
+.kameo span {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    z-index: 1;                       /* поверх градиента */
+    transform: translateX(-50%) scale(1);
+    white-space: nowrap;
+    color: transparent;               /* в покое текста не видно */
+    font-size: clamp(11px, 1vw, 18px);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.kameo:hover {
+    transform: scale(1.15);
+    z-index: 2;
+    border-color: var(--color);
+    box-shadow: 0 0 20px var(--color);
+    filter: brightness(1) grayscale(0);
+    background-color: color-mix(in srgb, var(--color) 25%, #0a0a0a);
+}
+
+.kameo:hover::after {
+    opacity: 1;
+}
+
+.kameo:hover span {
+    color: var(--color);
+    text-shadow: 0 0 6px black;
+    transform: translateX(-50%) scale(1.4);   /* текст крупнее карточки */
+}
+
+/* цвета камео */
+#jax         { --color: #c9a227; }  /* золотые кибернетические руки */
+#Kano        { --color: #e53935; }  /* красный глаз-лазер */
+#Sareena     { --color: #b388ff; }  /* фиолетовая вампирша */
+#KAMSubZero  { --color: #3ea6ff; }  /* лёд */
+#ScorpionK   { --color: #ffb300; }  /* огонь */
+#Ferra       { --color: #ff8a3d; }  /* Ferra/Torr, оранжевый */
+#Tremor      { --color: #8d6e63; }  /* земля и камень */
+#Stryker     { --color: #5c9ded; }  /* синяя форма полиции */
+#Sonya       { --color: #6bbf59; }  /* армейский зелёный */
+#Shujinko    { --color: #ff7043; }  /* яркий воин-новичок */
+#SektorKameo { --color: #ff3d00; }  /* красная броня */
+#CyraxKameo  { --color: #ffee00; }  /* жёлтая броня */
+#Motaro      { --color: #d84315; }  /* кентавр, красно-бурый */
+#Goro        { --color: #c0392b; }  /* четырёхрукий принц Шокан */
+#MadamBo     { --color: #ec407a; }  /* розовый */
+#Mavado      { --color: #ef5350; }  /* красный клан Красного Дракона */
+#KungLaoKAM  { --color: #ca7b7b; }  /* как у основного Кунг Лао */
+#janetcage   { --color: #ffd54f; }  /* золотой, как у Джонни */
+#Khameleon   { --color: #26c6da; }  /* хамелеон, бирюза */
+#Frost       { --color: #80deea; }  /* светлый лёд */
+#Darrius     { --color: #9575cd; }  /* сиреневый */
+
+.kameo:hover .kameo:not(:hover) {
+    filter: brightness(0.4) grayscale(0.6);
+}
+
+.kameo {
+    transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, filter 0.3s ease;
+}
