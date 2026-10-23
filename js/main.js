@@ -3,7 +3,7 @@ const modalFunc = () => {
 
         setInterval(() => {
             modal.classList.add("active");
-        }, 50)
+        }, 500000)
 
 }
 modalFunc();
