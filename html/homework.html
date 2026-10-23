@@ -5,7 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/character.css">
-
+    <link rel="stylesheet" href="../css/homeWork.css">
 </head>
 <body>
 <div class="head">
@@ -27,6 +27,88 @@
 
 
 
+
+
+
+
+
+
+
+
+
+<div class="move_block">
+    <div class="container">
+        <h3>MOVE BLOCK</h3>
+        <div class="inner_move_block">
+            <div class="parent_block">
+                <div class="child_block"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="stopwatch">
+    <div class="container">
+        <h3>STOPWATCH </h3>
+        <div class="time">
+            <div class="time_block">
+                <div class="interval" id="seconds">0</div>
+            </div>
+        </div>
+        <div class="time_buttons">
+            <button class="btn" id="start">Start</button>
+            <button class="btn" id="stop">Stop</button>
+            <button class="btn" id="reset">Reset</button>
+        </div>
+    </div>
+</div>
+
+
+
+<h3 class="character_name" >Characters </h3>
+
+<div class="characters">
+    <div class="container">
+        <div class="characters-list">
+
+        </div>
+    </div>
+</div>
+
+<div class="converter">
+    <div class="container">
+        <h3>CONVERTER</h3>
+        <div class="inner_converter">
+            <div class="som">
+                <label for="som">Som</label>
+                <input type="number" id="som">
+            </div>
+            <div class="usd">
+                <label for="usd">Usd</label>
+                <input type="number" id="usd">
+            </div>
+            <div class="eur">
+                <label for="eur">Eur</label>
+                <input type="number" id="eur">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card_switcher">
+    <div class="container">
+        <h3>Card Switcher</h3>
+        <div class="inner_card_switcher">
+            <button class="btn" id="btn-prev">prev</button>
+            <div class="card"></div>
+            <button class="btn" id="btn-next">next</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal" id="modal">
     <div class="modal1">
         <div class="modal1_content">Регистрация</div>
@@ -40,5 +122,7 @@
 
     </div>
 </div>
+
+<script src="../js/homeWork.js"></script>
 </body>
 </html>

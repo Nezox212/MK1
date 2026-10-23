@@ -7,6 +7,9 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+body:has(.modal.active) {
+    overflow: hidden;
+}
 .head{
     width: 100%;
     background-color: #00000080;
@@ -43,18 +46,20 @@ body{
     position: fixed;
     inset: 0;
     background-color: rgb(0 0 0 / 0.85);
+    backdrop-filter: blur(4px);
+
 }
 
 .modal1{
     width: 25%;
-    height: 55%;
+    height: 60%;
     position: absolute;
     top: 25%;
     left: 37.5%;
-    background-color: rgb(60 31 89);
-    border: 10px solid #1f0832;
-    border-radius: 15px;
-
+    background-color: #4e4b4b;
+    border: 3px solid #ffffff;
+    border-radius: 5%;
+    box-shadow: 1px 1px 10px #ffffff;
     font-family: Arial, Helvetica, sans-serif;
 
 }
@@ -65,16 +70,20 @@ body{
     width: 70%;
     height: 10%;
     margin: 25px auto;
-    border: 5px solid #8309d6;
+    border: 1px solid #ffffff;
+    box-shadow: 1px 1px 10px #ffffff;
     border-radius: 10px;
     background-color: rgb(110 98 98);
     cursor: pointer;
-    font-size: 50px;
-    transition: transform 0.6s ease;
+    font-size: 24px;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
 }
 .inputModal:hover{
     transform: scale(1.05);
+    box-shadow: 4px 4px 15px #d8d6d6;
+
 }
+
 .modal1_content{
     display: flex;
     justify-content: center;
@@ -82,21 +91,21 @@ body{
     width: 99%;
     height: 10%;
     font-size: 50px;
-    color: #1c17bd;
+    color: #ffffff;
 }
 .modal_btn{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 60%;
     height: 10%;
     margin:  auto;
-    border: 3px solid #8309d6;
-    background-color: rgb(119 0 255);
+    border: 3px solid #ffffff;
+    background-color: rgb(0 0 0);
     border-radius: 10px;
     cursor: pointer;
-    color: #000000;
-    font-size: 32px;
+    color: #ffffff;
+    font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     transition: transform 0.3s ease, color 2.9s ease;
@@ -109,7 +118,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #000107;
+    color: #ffffff;
     font-size: 32px;
     margin-top: 10px;
 }

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Scorpion",
+    "age": 25,
+    "person_photo": "https://upload.wikimedia.org/wikipedia/ru/9/95/Scorpion_in_MK1.png?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=thumbnail_unscaled&_=20230811144149"
+  },
+  {
+    "name": "Sub Zero",
+    "age": 400,
+    "person_photo": "https://upload.wikimedia.org/wikipedia/ru/1/16/Sub-Zero_in_MK1.png?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=thumbnail_unscaled&_=20230811144331"
+  },
+  {
+    "name": "Reptile",
+    "age": 30,
+    "person_photo": "https://upload.wikimedia.org/wikipedia/ru/a/a9/Reptile_in_MK1.png?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=thumbnail_unscaled&_=20230811142431"
+  }
+]

@@ -1,9 +1,9 @@
-// 1. сначала объявляем колбэк
+
 window.onYouTubeIframeAPIReady = initPlayer;
 
-// 2. потом подгружаем API
+
 (function loadApi() {
-    if (window.YT && YT.Player) {        // API уже есть: запускаем сразу
+    if (window.YT && YT.Player) {
         initPlayer();
         return;
     }

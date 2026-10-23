@@ -3,7 +3,7 @@ const modalFunc = () => {
 
         setInterval(() => {
             modal.classList.add("active");
-        }, 50000)
+        }, 50)
 
 }
 modalFunc();
@@ -11,25 +11,31 @@ modalFunc();
 
 const gmailInput = document.querySelector("#gmail_input");
 const phoneInput = document.querySelector("#phone_input");
-const modalBtn = document.querySelector('.modal_btn');
-const result = document.querySelector('.result');
-//       example@gmail.com
+const modalBtn = document.querySelector(".modal_btn");
+const result = document.querySelector(".result");
+
+// example@gmail.com
 const regexGmail = /^[a-z0-9.]{6,30}@gmail\.com$/i;
-const regexPhone = /^\+996 \d{3} \d{2}-\d{2}-\d{2}$/;
-let point = 0
-modalBtn.onclick = () => {
-    if(regexGmail.test(gmailInput.value)){point++}else point = 0;
-    if(regexPhone.test(phoneInput.value)){point++}else point = 0;
-    if (point === 2){
-        result.textContent = "good";
-        result.style.color = "green"
 
-    }else{
-        result.textContent = "bad";
-        result.style.color = "red"
+const regexPhone = /^\+996\d{9}$/;
 
+
+phoneInput.oninput = () => {
+    if (!phoneInput.value.startsWith("+996")) {
+        phoneInput.value = "+996 ";
     }
-}
+};
+
+modalBtn.onclick = () => {
+    const cleanPhone = phoneInput.value.replace(/[\s-]/g, "");
+
+    const isGmailValid = regexGmail.test(gmailInput.value.trim());
+    const isPhoneValid = regexPhone.test(cleanPhone);
+    const isValid = isGmailValid && isPhoneValid;
+
+    result.textContent = isValid ? "good" : "bad";
+    result.style.color = isValid ? "green" : "red";
+};
 
 modal.onclick = (event) => {
     if (event.target === modal) {
@@ -39,20 +45,17 @@ modal.onclick = (event) => {
 
 (() => {
 
-// достаём картинки и цвета из готовых страниц и CSS
     async function loadCards(htmlUrl, cssUrl, selector) {
         const [html, css] = await Promise.all([
             fetch(htmlUrl).then(r => r.text()),
             fetch(cssUrl).then(r => r.text())
         ]);
 
-        // цвета: #id { --color: #xxxxxx; }
         const colors = {};
         for (const m of css.matchAll(/#([\w-]+)\s*\{\s*--color:\s*(#[0-9a-fA-F]{3,8})/g)) {
             colors[m[1]] = m[2];
         }
 
-        // картинки: style="--img: url('../img/x.png')"
         const doc = new DOMParser().parseFromString(html, 'text/html');
         return [...doc.querySelectorAll(selector)].map(el => ({
             id: el.id,
@@ -116,7 +119,7 @@ modal.onclick = (event) => {
 
 (() => {
 
-    /* ---------- общее ---------- */
+    
     let audioCtx;
     function beep({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) {
         audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
@@ -170,7 +173,6 @@ modal.onclick = (event) => {
     let best = Number(load('silBest')) || 0;
     silBestEl.textContent = best;
 
-// берём картинки и цвета из character.html и character.css
     async function loadPool() {
         const get = url => fetch(url).then(r => {
             if (!r.ok) throw new Error(`Не найден файл: ${url}`);
@@ -199,7 +201,6 @@ modal.onclick = (event) => {
         silNext.hidden = true;
         silBox.classList.remove('done');
 
-        // мгновенно чернеем без анимации, чтобы новый боец не мелькал в цвете
         silImg.style.transition = 'none';
         silImg.classList.remove('revealed');
 
@@ -288,13 +289,13 @@ modal.onclick = (event) => {
     let running = false;
     let last = 0;
     let raf = 0;
-    let bestHit = Number(load('mightBest')) || 0;   // сколько секунд осталось на лучшем ударе
+    let bestHit = Number(load('mightBest')) || 0;
     if (bestHit) mBestEl.textContent = `${(TIME - bestHit).toFixed(1)} с`;
 
     function newKey() {
         let next;
         do { next = KEYS[Math.floor(Math.random() * KEYS.length)]; }
-        while (next === targetKey);          // не повторяем одну и ту же подряд
+        while (next === targetKey);
         targetKey = next;
         mKey.textContent = next.replace('Key', '');
     }
@@ -368,10 +369,10 @@ modal.onclick = (event) => {
                 mBestEl.textContent = `${used.toFixed(1)} с`;
             }
         } else {
-            // слишком рано: сразу проигрыш
+
             endMight(false, `Слишком рано! Мощность была всего ${Math.round(power)}%, нужно ${GOAL}%+`);
             mBar.classList.remove('shake');
-            void mBar.offsetWidth;          // перезапуск анимации
+            void mBar.offsetWidth;
             mBar.classList.add('shake');
         }
     }
@@ -406,17 +407,17 @@ modal.onclick = (event) => {
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         if (e.code === 'Space') {
-            e.preventDefault();              // не прокручивать страницу
+            e.preventDefault();
             if (!e.repeat) strike();
             return;
         }
         if (KEYS.includes(e.code)) {
             e.preventDefault();
-            if (!e.repeat) press(e.code);    // зажатая клавиша не считается
+            if (!e.repeat) press(e.code);
         }
     });
 
-// чтобы пробел не «нажимал» кнопку, если она в фокусе
+
     document.addEventListener('keyup', e => {
         if (running && e.code === 'Space') e.preventDefault();
     });})();
