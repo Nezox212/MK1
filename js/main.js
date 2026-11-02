@@ -1,47 +1,3 @@
-const modal = document.querySelector('.modal');
-const modalFunc = () => {
-
-        setInterval(() => {
-            modal.classList.add("active");
-        }, 500000)
-
-}
-modalFunc();
-
-
-const gmailInput = document.querySelector("#gmail_input");
-const phoneInput = document.querySelector("#phone_input");
-const modalBtn = document.querySelector(".modal_btn");
-const result = document.querySelector(".result");
-
-// example@gmail.com
-const regexGmail = /^[a-z0-9.]{6,30}@gmail\.com$/i;
-
-const regexPhone = /^\+996\d{9}$/;
-
-
-phoneInput.oninput = () => {
-    if (!phoneInput.value.startsWith("+996")) {
-        phoneInput.value = "+996 ";
-    }
-};
-
-modalBtn.onclick = () => {
-    const cleanPhone = phoneInput.value.replace(/[\s-]/g, "");
-
-    const isGmailValid = regexGmail.test(gmailInput.value.trim());
-    const isPhoneValid = regexPhone.test(cleanPhone);
-    const isValid = isGmailValid && isPhoneValid;
-
-    result.textContent = isValid ? "good" : "bad";
-    result.style.color = isValid ? "green" : "red";
-};
-
-modal.onclick = (event) => {
-    if (event.target === modal) {
-        modal.classList.remove('active');
-    }
-};
 
 (() => {
 
@@ -97,7 +53,7 @@ modal.onclick = (event) => {
             const f = pick(fighterList.filter(x => fighters[x.id]));
             const c = pick(cameoList.filter(x => cameos[x.id]));
             render(fEl, f, fighters[f.id], 'Боец', 'html/character.html');
-            render(cEl, c, cameos[c.id], 'Камео', 'html/cameo.html');
+            render(cEl, c, cameos[c.id], 'Камео', 'html/kameo.html');
         }
 
         roll();

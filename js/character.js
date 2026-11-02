@@ -88,7 +88,11 @@
     }
 
     function step(dir) {
-        current = (current + dir + cards.length) % cards.length;
+        const visible = [...document.querySelectorAll('.fighter:not(.is-hidden)')];
+        if (!visible.length) return;
+        const pos = visible.indexOf(cards[current]);
+        const next = visible[(pos + dir + visible.length) % visible.length];
+        current = cards.indexOf(next);
         currentTab = 'info';
         render();
     }

@@ -242,3 +242,51 @@ body.no-scroll { overflow: hidden; }
 .fm__nav { top: 50%; width: 40px; height: 60px; transform: translateY(-50%); z-index: 2; }
 .fm__prev { left: -50px; }
 .fm__next { right: -50px; }
+.controls { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
+
+#fSearch {
+
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: rgb(255 255 255);
+    color: #000000;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 10px;
+    font-size: 16px;
+}
+#fSearch:focus { outline: none; border-color: #fff; box-shadow: 0 0 8px rgba(255,255,255,.4); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: black;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.4);
+    transition: background .2s, color .2s;
+}
+.chip:hover { background: rgb(191 177 177 / 0.75); }
+.chip.active { background: #fff; color: #000; }
+
+.fighter { position: relative; }
+.is-hidden { display: none !important; }
+.fighters__empty { text-align: center; color: #ccc; margin: 40px 0; }
+
+.heart {
+    position: absolute; top: 8px; right: 8px; z-index: 2;
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    background: rgba(0,0,0,.55); color: #888; border: none; font-size: 18px;
+    transition: transform .2s, color .2s;
+}
+.heart:hover { transform: scale(1.15); }
+.heart.on { color: #ff3b5c; }
+
+.badge {
+    position: absolute; top: 8px; left: 8px; z-index: 2;
+    padding: 3px 8px; border-radius: 6px; font-size: 12px; font-style: normal; color: #fff;
+}
+.badge--good  { background: #2e8b57; }
+.badge--evil  { background: #b22222; }
+.badge--guest { background: #6a5acd; }

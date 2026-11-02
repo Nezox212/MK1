@@ -125,12 +125,15 @@ body:has(.modal.active) {
 .result{
     display: flex;
     justify-content: center;
-     align-items: center;
+    align-items: center;
     background-color: rgb(0 0 0 / 0);
-    width: 300px;
-    font-size: 50px;
-    height: 40px;
+    width: 100%;
+    font-size: 32px;
+
+    height: 70px;
     margin: auto auto;
+    z-index: 2;
+
 }
 a{
     color: white;
@@ -442,4 +445,9 @@ a{
     color: #e53935;
     border-color: #e53935;
     box-shadow: 0 0 20px #e53935;
+}
+.user { margin-left: auto; }
+.user__out {
+    background: none; border: none; color: inherit;
+    text-decoration: underline; cursor: pointer; font: inherit;
 }

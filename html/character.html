@@ -26,7 +26,17 @@
 
 
 
-
+<div class="controls">
+    <input type="search" id="fSearch" placeholder="Поиск бойца...">
+    <div class="chips">
+        <button class="chip active" data-side="all">Все</button>
+        <button class="chip" data-side="good">Добро</button>
+        <button class="chip" data-side="evil">Зло</button>
+        <button class="chip" data-side="guest">Гости</button>
+        <button class="chip" id="favOnly">♥ Избранные</button>
+        <button class="chip" id="sortSide">Сортировка по сторонам</button>
+    </div>
+</div>
 
 
 
@@ -106,9 +116,10 @@
 
     </div>
 </div>
-<script src="../js/main.js"></script>
 <script src="../js/fighters.js"></script>
 <script src="../js/character.js"></script>
+<script src="../js/filters.js"></script>
+<script src="../js/modal.js"></script>
 
 </body>
 </html>
