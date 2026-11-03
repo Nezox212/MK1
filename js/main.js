@@ -19,7 +19,7 @@
 </div>`;
     };
 
-    dataReady.then(({ fighterList, cameoList }) => {
+    window.dataReady.then(({ fighterList, cameoList }) => {
         const fEl = document.getElementById('rFighter');
         const cEl = document.getElementById('rCameo');
         const rollBtn = document.getElementById('rollBtn');

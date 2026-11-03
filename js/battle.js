@@ -1,8 +1,8 @@
 (() => {
     const DIFFICULTY = {
-        easy:   { interval: 3000, dmg: [10, 20], dodgeChance: 0.5, dodgeWindow: 800 },
-        normal: { interval: 3000, dmg: [12, 25], dodgeChance: 0.35, dodgeWindow: 700 },
-        hard:   { interval: 2000, dmg: [15, 30], dodgeChance: 0.2, dodgeWindow: 600 }
+        easy:   { interval: 2500, dmg: [10, 20], dodgeChance: 0.5, dodgeWindow: 1000 }, // ~15 секунд
+        normal: { interval: 2000, dmg: [15, 25], dodgeChance: 0.35, dodgeWindow: 750 }, // ~10 секунд
+        hard:   { interval: 1500, dmg: [20, 30], dodgeChance: 0.2, dodgeWindow: 500 }   // ~6Cекунд
     };
 
     const WINS_NEEDED = 2;
