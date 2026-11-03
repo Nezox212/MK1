@@ -323,3 +323,58 @@
         if (running && e.code === 'Space') e.preventDefault();
     });
 })();
+
+const initMainApp = () => {
+    if (typeof window.dataReady === 'undefined' || !window.dataReady.then) {
+        setTimeout(initMainApp, 50);
+        return;
+    }
+
+    const pick = list => list[Math.floor(Math.random() * list.length)];
+
+    const shorten = (text = '', max = 160) => {
+        if (text.length <= max) return text;
+        return text.slice(0, max).replace(/\s+\S*$/, '') + '…';
+    };
+
+    const render = (el, item, tag, link) => {
+        if (!el) return;
+        el.style.setProperty('--color', item.color);
+        el.style.setProperty('--img', `url('${window.BASE || ''}${item.img}')`);
+        el.innerHTML = `
+<div class="rcard__img" style="background-image: url('${window.BASE || ''}${item.img}')"></div>
+<div class="rcard__body">
+    <div class="rcard__tag">${tag}</div>
+    <h3 class="rcard__name">${item.name}</h3>
+    <p class="rcard__text">${shorten(item.info)}</p>
+    <a class="rcard__link" href="${link}?search=${encodeURIComponent(item.name)}">Подробнее</a>
+</div>`;
+    };
+
+    window.dataReady.then(({ fighterList, cameoList }) => {
+        const fEl = document.getElementById('rFighter');
+        const cEl = document.getElementById('rCameo');
+        const rollBtn = document.getElementById('rollBtn');
+
+        const roll = () => {
+            if (fEl) render(fEl, pick(fighterList), 'Боец', 'html/character.html');
+            if (cEl) render(cEl, pick(cameoList), 'Камео', 'html/kameo.html');
+        };
+
+        if (fEl && cEl) roll();
+
+        if (rollBtn) {
+            rollBtn.addEventListener('click', () => {
+                if (fEl) fEl.classList.add('hide');
+                if (cEl) cEl.classList.add('hide');
+                setTimeout(() => {
+                    roll();
+                    if (fEl) fEl.classList.remove('hide');
+                    if (cEl) cEl.classList.remove('hide');
+                }, 300);
+            });
+        }
+    }).catch(err => console.error('Случайный боец:', err));
+};
+
+initMainApp();
