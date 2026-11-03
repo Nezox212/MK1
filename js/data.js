@@ -16,7 +16,7 @@ const buildCards = (box, items, cls) => {
 <div class="${cls}" id="${i.id}" style="--img: url('${BASE}${i.img}')"><span>${i.name.toUpperCase()}</span></div>`).join('');
 };
 
-const dataReady = (async () => {
+window.dataReady = (async () => {
     try {
         const [f, c] = await Promise.all([getJSON('fighters'), getJSON('cameos')]);
 
