@@ -22,31 +22,14 @@
         <div class="link" id="homeWork"> HOMEWORK</div>
     </a>
 </div>
-
-<div class="kameos">
-    <div class="kameo" id="jax" style="--img: url('../img/Jax.webp')"><span>JAX</span></div>
-    <div class="kameo" id="Kano" style="--img: url('../img/Kano.webp')"><span>KANO</span></div>
-    <div class="kameo" id="Sareena" style="--img: url('../img/Sareena.webp')"><span>SAREENA</span></div>
-    <div class="kameo" id="KAMSubZero" style="--img: url('../img/KAMSubZero.webp')"><span>SUBZERO</span></div>
-    <div class="kameo" id="ScorpionK" style="--img: url('../img/Scorpion.webp')"><span>SCORPION</span></div>
-    <div class="kameo" id="Ferra" style="--img: url('../img/KAM.webp')"><span>FERRA</span></div>
-    <div class="kameo" id="Tremor" style="--img: url('../img/Tremor.webp')"><span>TREMOR</span></div>
-    <div class="kameo" id="Stryker" style="--img: url('../img/Stryker.webp')"><span>STRYKER</span></div>
-    <div class="kameo" id="Sonya" style="--img: url('../img/Sonya.webp')"><span>SONYA</span></div>
-    <div class="kameo" id="Shujinko" style="--img: url('../img/Shujinko.webp')"><span>SHUJINKO</span></div>
-    <div class="kameo" id="SektorKameo" style="--img: url('../img/SektorKameo.webp')"><span>SECTOR</span></div>
-    <div class="kameo" id="CyraxKameo" style="--img: url('../img/CyraxKameo.webp')"><span>CYRAX</span></div>
-    <div class="kameo" id="Motaro" style="--img: url('../img/Motaro.webp')"><span>MOTARO</span></div>
-    <div class="kameo" id="Goro" style="--img: url('../img/Goro.webp')"><span>GORO</span></div>
-    <div class="kameo" id="MadamBo" style="--img: url('../img/MadamBo.webp')"><span>MADAM BO</span></div>
-    <div class="kameo" id="Mavado" style="--img: url('../img/Mavado.webp')"><span>MOVADO</span></div>
-    <div class="kameo" id="KungLaoKAM" style="--img: url('../img/KungLaoKAM.webp')"><span>KUNGLAO</span></div>
-    <div class="kameo" id="janetcage" style="--img: url('../img/janetcage.png')"><span>JANET CAGE</span></div>
-    <div class="kameo" id="Khameleon" style="--img: url('../img/Khameleon.webp')"><span>KHAMELEON</span></div>
-    <div class="kameo" id="Frost" style="--img: url('../img/Frost.webp')"><span>FROST</span></div>
-    <div class="kameo" id="Darrius" style="--img: url('../img/Darrius.webp')"><span>DARRISU</span></div>
-
+<div class="controls">
+    <input type="search" id="fSearch" placeholder="Поиск камео...">
+    <div class="chips">
+        <button class="chip" id="favOnly">♥ Избранные</button>
+    </div>
 </div>
+<div class="kameos"></div>
+
 
 <div class="fm" id="kameoModal">
     <div class="fm__box">
@@ -60,7 +43,6 @@
             <h2 class="fm__name"></h2>
             <div class="fm__tabs">
                 <button class="fm__tab active" data-tab="info">Инфо</button>
-                <button class="fm__tab" data-tab="move">Приём</button>
                 <button class="fm__tab" data-tab="video">Видео</button>
             </div>
             <div class="fm__content"></div>
@@ -68,24 +50,42 @@
     </div>
 </div>
 
-<div class="modal" id="modal">
-    <div class="modal1">
-        <div class="modal1_content">Регистрация</div>
-        <div class="modal1_input_content">Gmail</div>
-        <input type="email" class="inputModal" id="gmail_input">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal__box">
+        <button type="button" class="modal__close" aria-label="Закрыть">×</button>
 
-        <div class="modal1_input_content">Phone Number</div>
-        <input type="tel" class="inputModal" id="phone_input">
-        <span class="result"></span>
-        <button class="modal_btn">ПРОВЕРИТЬ </button>
+        <form class="modal__form" id="modalForm" novalidate>
+            <h2 class="modal__title" id="modalTitle">Регистрация</h2>
+            <p class="modal__sub">Укажите почту и телефон</p>
 
+            <div class="field">
+                <label for="gmail_input">Gmail</label>
+                <input type="email" id="gmail_input" name="gmail" placeholder="example@gmail.com" autocomplete="email" required>
+                <div class="field__error"></div>
+            </div>
+
+            <div class="field">
+                <label for="phone_input">Телефон</label>
+                <input type="tel" id="phone_input" name="phone" value="+996 " autocomplete="tel" inputmode="tel" required>
+                <div class="field__error"></div>
+            </div>
+
+            <button type="submit" class="modal__submit">Зарегистрироваться</button>
+            <p class="modal__msg" aria-live="polite"></p>
+        </form>
+
+        <div class="modal__success" hidden>
+            <div class="modal__check">✓</div>
+            <h3>Готово!</h3>
+            <p>Вы успешно зарегистрированы</p>
+        </div>
     </div>
 </div>
 
-<script src="../js/cameos.js"></script>
+<script src="../js/data.js"></script>
 <script src="../js/cameo.js"></script>
 <script src="../js/modal.js"></script>
-
+<script src="../js/filters.js"></script>
 
 </body>
 </html>

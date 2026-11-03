@@ -1,28 +1,21 @@
-(() => {
-    // Стороны бойцов. Если с каким-то не согласны, меняйте здесь.
-    const SIDES = {
-        "sub-zero": "good", "scorpion": "good", "smoke": "good", "kung-lao": "good",
-        "raiden": "good", "kenshi": "good", "ashrah": "good", "johnny-cage": "good",
-        "li-mei": "good", "liu-kang": "good", "takeda": "guest", "cyrax": "guest",
-        "kitana": "evil", "sindel": "evil",
-
-        "reptile": "good", "geras": "good", "baraka": "good", "noob-saibot": "guest",
-        "ermac": "guest", "sektor": "guest", "nitara": "evil", "reiko": "evil",
-        "havik": "evil", "tanya": "evil", "mileena": "evil", "rain": "evil",
-        "general-shao": "evil", "quan-chi": "evil", "shang-tsung": "evil",
-
-        "peacemaker": "guest", "homelander": "guest", "ghostface": "guest",
-        "conan": "guest", "t-1000": "guest", "omni-man": "guest"
-    };
-    const LABEL = { good: "Добро", evil: "Зло", guest: "Гость" };
+dataReady.then(() => {
+    const LABEL = { good: "Добро", evil: "Зло", guest: "Другие" };
     const ORDER = { good: 0, evil: 1, guest: 2 };
 
-    const grid = document.querySelector(".fighters");
-    const original = [...grid.querySelectorAll(".fighter")];
+    const grid = document.querySelector(".fighters, .kameos");
+    if (!grid) return;
+
+    const isFighters = grid.classList.contains("fighters");
+    const DATA = isFighters ? fighters : cameos;
+    const FAV_KEY = isFighters ? "favFighters" : "favCameos";
+
+    const original = [...grid.querySelectorAll(".fighter, .kameo")];
     const search = document.getElementById("fSearch");
     const chips = document.querySelectorAll(".chip[data-side]");
     const favBtn = document.getElementById("favOnly");
     const sortBtn = document.getElementById("sortSide");
+
+    const nameOf = card => DATA[card.id].name.trim().toLowerCase();
 
     const empty = document.createElement("p");
     empty.className = "fighters__empty";
@@ -30,22 +23,21 @@
     empty.hidden = true;
     grid.after(empty);
 
-    // ---------- избранное ----------
     let favs = [];
-    try { favs = JSON.parse(localStorage.getItem("favFighters")) || []; } catch (e) {}
+    try { favs = JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch (e) {}
     const saveFavs = () => {
-        try { localStorage.setItem("favFighters", JSON.stringify(favs)); } catch (e) {}
+        try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch (e) {}
     };
 
-    // ---------- сердечко и бейдж на каждой карточке ----------
     original.forEach(card => {
-        const side = SIDES[card.id] || "guest";
-        card.dataset.side = side;
-
-        const badge = document.createElement("em");
-        badge.className = `badge badge--${side}`;
-        badge.textContent = LABEL[side];
-        card.append(badge);
+        if (isFighters) {
+            const s = DATA[card.id].side || "guest";
+            card.dataset.side = s;
+            const badge = document.createElement("em");
+            badge.className = `badge badge--${s}`;
+            badge.textContent = LABEL[s];
+            card.append(badge);
+        }
 
         const heart = document.createElement("button");
         heart.className = "heart";
@@ -54,7 +46,7 @@
         heart.textContent = "♥";
         heart.classList.toggle("on", favs.includes(card.id));
         heart.addEventListener("click", e => {
-            e.stopPropagation();                 // чтобы не открывалась модалка
+            e.stopPropagation();
             favs = favs.includes(card.id)
                 ? favs.filter(id => id !== card.id)
                 : [...favs, card.id];
@@ -65,25 +57,24 @@
         card.append(heart);
     });
 
-    // ---------- фильтры ----------
     let side = "all";
     let onlyFav = false;
     let sortBySide = false;
 
     function apply() {
         const q = search.value.trim().toLowerCase();
+        const exact = q !== "" && original.some(c => nameOf(c) === q);
 
-        // порядок: по умолчанию или по сторонам (добро, зло, гости)
-        const list = sortBySide
+        const list = sortBySide && isFighters
             ? [...original].sort((a, b) => ORDER[a.dataset.side] - ORDER[b.dataset.side])
             : original;
         list.forEach(c => grid.appendChild(c));
 
         let shown = 0;
         original.forEach(card => {
-            const name = card.querySelector("span").textContent.toLowerCase();
+            const name = nameOf(card);
             const ok =
-                name.includes(q) &&
+                (exact ? name === q : name.includes(q)) &&
                 (side === "all" || card.dataset.side === side) &&
                 (!onlyFav || favs.includes(card.id));
             card.classList.toggle("is-hidden", !ok);
@@ -100,17 +91,20 @@
         apply();
     }));
 
-    favBtn.addEventListener("click", () => {
+    favBtn?.addEventListener("click", () => {
         onlyFav = !onlyFav;
         favBtn.classList.toggle("active", onlyFav);
         apply();
     });
 
-    sortBtn.addEventListener("click", () => {
+    sortBtn?.addEventListener("click", () => {
         sortBySide = !sortBySide;
         sortBtn.classList.toggle("active", sortBySide);
         apply();
     });
 
+    const fromLink = new URLSearchParams(location.search).get("search");
+    if (fromLink) search.value = fromLink;
+
     apply();
-})();
+}).catch(err => console.error("Фильтры:", err));

@@ -1,130 +1,115 @@
-const cameoVideo = "";   // ID ролика со всеми камео-приёмами
+dataReady.then(() => {
+    let audioCtx;
 
-const cameos = {
-    "jax": {
-        name: "Jax",
-        info: "Джакс Бриггс, майор спецназа США с кибернетическими руками. Огромная сила и опыт в бою делают его надёжным напарником для любого бойца.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Kano": {
-        name: "Kano",
-        info: "Кано, лидер преступного клана Чёрный Дракон. Хитрый наёмник с кибернетическим глазом и ножом, который сражается грязно и ради выгоды.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Sareena": {
-        name: "Sareena",
-        info: "Сарина, ловкая убийца с острыми клинками. Быстрая и безжалостная, она наносит стремительные удары из засады.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "KAMSubZero": {
-        name: "Sub-Zero",
-        info: "Версия Саб-Зиро, помогающая основному бойцу ледяными атаками. Замораживает врагов и создаёт ледяные ловушки.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "ScorpionK": {
-        name: "Scorpion",
-        info: "Скорпион в роли напарника: огненные атаки и фирменный гарпун прямо из-за спины основного бойца.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Ferra": {
-        name: "Ferra",
-        info: "Ферра, маленькая, но сильная воительница, которая сражается вместе с огромным Торром. Эта пара работает как единое целое.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Tremor": {
-        name: "Tremor",
-        info: "Тремор, воин, повелевающий землёй и камнем. Его атаки тяжёлые и сокрушительные, а защита крепкая.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Stryker": {
-        name: "Stryker",
-        info: "Страйкер, офицер спецподразделения полиции. Использует огнестрельное оружие и гранаты, чтобы поддержать напарника на расстоянии.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Sonya": {
-        name: "Sonya",
-        info: "Соня Блейд, офицер спецназа и опытный боец. Сочетает рукопашный бой с энергетическими атаками и командной работой.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Shujinko": {
-        name: "Shujinko",
-        info: "Шуджинко, воин, способный копировать приёмы других бойцов. Универсальный помощник, который подстраивается под ситуацию.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "SektorKameo": {
-        name: "Sektor",
-        info: "Кибернетический ниндзя в красной броне, поддерживающий напарника ракетами и огнём.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "CyraxKameo": {
-        name: "Cyrax",
-        info: "Кибернетический ниндзя в жёлтой броне. Помогает сетями, гранатами и точными техническими атаками.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Motaro": {
-        name: "Motaro",
-        info: "Моторо, могучий кентавр из расы центавров. Огромная сила и мощные удары копытами делают его грозным помощником.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Goro": {
-        name: "Goro",
-        info: "Горо, четырёхрукий принц расы Шокан. Огромный и мощный чемпион, который крушит врагов силой своих рук.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "MadamBo": {
-        name: "Madam Bo",
-        info: "Мадам Бо, мастер боевых искусств и владелица чайного дома. Использует быстрый и техничный стиль боя.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Mavado": {
-        name: "Mavado",
-        info: "Мавадо, воин клана Красный Дракон. Сражается крюками-гарпунами и быстрыми акробатическими атаками.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "KungLaoKAM": {
-        name: "Kung Lao",
-        info: "Кунг Лао в роли напарника: метает свою шляпу с лезвиями и помогает основному бойцу в атаке.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "janetcage": {
-        name: "Janet Cage",
-        info: "Джанет Кейдж, мать Джонни Кейджа. Неожиданная помощница, которая вмешивается в бой в самый нужный момент.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Khameleon": {
-        name: "Khameleon",
-        info: "Хамелеон, загадочная воительница, способная менять облик и использовать приёмы других бойцов.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Frost": {
-        name: "Frost",
-        info: "Фрост, ученица клана Лин Куэй с ледяными способностями. Быстрая и дерзкая, она замораживает противников.",
-        move: "",
-        video: { start: 0, end: 0 }
-    },
-    "Darrius": {
-        name: "Darrius",
-        info: "Дарриус, бывший гладиатор и воин. Опытный боец ближнего боя, который готов в любой момент прикрыть напарника.",
-        move: "",
-        video: { start: 0, end: 0 }
-    }
-};
+    const beep = ({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) => {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const t = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, t);
+        osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration);
+        gain.gain.setValueAtTime(volume, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(t + duration);
+    };
+
+    const cards = [...document.querySelectorAll('.kameo')];
+    const modal = document.getElementById('kameoModal');
+    const nameEl = modal.querySelector('.fm__name');
+    const content = modal.querySelector('.fm__content');
+    const tabs = modal.querySelectorAll('.fm__tab');
+
+    let current = 0;
+    let currentTab = 'info';
+
+    const renderContent = () => {
+        const data = cameos[cards[current].id] || {};
+
+        if (currentTab === 'info') {
+            content.innerHTML = data.info
+                ? `<p>${data.info}</p>`
+                : `<p class="fm__empty">Информация скоро появится.</p>`;
+        }
+
+        if (currentTab === 'move') {
+            content.innerHTML = data.move
+                ? `<p>${data.move}</p>`
+                : `<p class="fm__empty">Описание приёма скоро появится.</p>`;
+        }
+
+        if (currentTab === 'video') {
+            const v = data.video;
+            content.innerHTML = cameoVideo && v && v.end > v.start
+                ? `<iframe class="fm__video"
+                       src="https://www.youtube.com/embed/${cameoVideo}?start=${v.start}&end=${v.end}&autoplay=1&rel=0"
+                       referrerpolicy="strict-origin-when-cross-origin"
+                       allow="autoplay; encrypted-media"
+                       allowfullscreen></iframe>`
+                : `<p class="fm__empty">Видео скоро появится.</p>`;
+        }
+    };
+
+    const render = () => {
+        const card = cards[current];
+        const data = cameos[card.id] || {};
+
+        modal.style.setProperty('--color', getComputedStyle(card).getPropertyValue('--color'));
+        modal.style.setProperty('--img', card.style.getPropertyValue('--img'));
+        nameEl.textContent = data.name || card.textContent.trim();
+
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === currentTab));
+        renderContent();
+    };
+
+    const openModal = index => {
+        current = index;
+        currentTab = 'info';
+        render();
+        modal.classList.add('open');
+        document.body.classList.add('no-scroll');
+        beep({ freq: 200, endFreq: 60, duration: 0.25, type: 'sawtooth', volume: 0.12 });
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('open');
+        document.body.classList.remove('no-scroll');
+        content.innerHTML = '';
+    };
+
+    const step = dir => {
+        const visible = [...document.querySelectorAll('.kameo:not(.is-hidden)')];
+        if (!visible.length) return;
+        const pos = visible.indexOf(cards[current]);
+        const next = visible[(pos + dir + visible.length) % visible.length];
+        current = cards.indexOf(next);
+        currentTab = 'info';
+        render();
+    };
+
+    cards.forEach((card, i) => {
+        card.addEventListener('mouseenter', () => beep({ freq: 700, endFreq: 400, duration: 0.08, type: 'triangle' }));
+        card.addEventListener('click', () => openModal(i));
+    });
+
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+        currentTab = tab.dataset.tab;
+        render();
+    }));
+
+    modal.querySelector('.fm__close').addEventListener('click', closeModal);
+    modal.querySelector('.fm__prev').addEventListener('click', () => step(-1));
+    modal.querySelector('.fm__next').addEventListener('click', () => step(1));
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    document.addEventListener('keydown', e => {
+        if (!modal.classList.contains('open')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') step(-1);
+        if (e.key === 'ArrowRight') step(1);
+    });
+}).catch(err => console.error('Камео:', err));

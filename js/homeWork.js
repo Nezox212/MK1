@@ -52,7 +52,7 @@ reset.onclick = () => {
     clearInterval(startTimer);
     startTimer = null;
 }
-//characters
+
 const charactersList = document.querySelector(".characters-list");
 
 const charactersFunc = async () => {

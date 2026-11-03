@@ -1,24 +1,23 @@
-(() => {
+dataReady.then(() => {
+    let audioCtx;
 
-    /* ---------- звуки ---------- */
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    function beep({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) {
+    const beep = ({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) => {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
+        const t = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + duration);
-        gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.frequency.setValueAtTime(freq, t);
+        osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration);
+        gain.gain.setValueAtTime(volume, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-    }
+        osc.stop(t + duration);
+    };
 
-    /* ---------- модалка ---------- */
     const cards = [...document.querySelectorAll('.fighter')];
     const modal = document.getElementById('fighterModal');
     const nameEl = modal.querySelector('.fm__name');
@@ -28,9 +27,8 @@
     let current = 0;
     let currentTab = 'info';
 
-    function renderContent() {
-        const card = cards[current];
-        const data = fighters[card.id] || {};
+    const renderContent = () => {
+        const data = fighters[cards[current].id] || {};
 
         if (currentTab === 'info') {
             content.innerHTML = data.info
@@ -38,29 +36,19 @@
                 : `<p class="fm__empty">Информация скоро появится.</p>`;
         }
 
-        if (currentTab === 'combos') {
-            content.innerHTML = data.combos && data.combos.length
-                ? data.combos.map(c => `
-                <div class="fm__combo">
-                    <b>${c.name}</b><br>
-                    ${c.keys}${c.damage ? ` · урон ${c.damage}%` : ''}
-                </div>`).join('')
-                : `<p class="fm__empty">Комбо скоро появятся.</p>`;
-        }
         if (currentTab === 'fatality') {
             const f = data.fatality;
             content.innerHTML = f && f.end > f.start
-                ? `${f.name ? `<p>${f.name}</p>` : ''}
-           <iframe class="fm__video"
-                   src="https://www.youtube.com/embed/${fatalityVideo}?start=${f.start}&end=${f.end}&autoplay=1&rel=0"
-                   referrerpolicy="strict-origin-when-cross-origin"
-                   allow="autoplay; encrypted-media"
-                   allowfullscreen></iframe>`
+                ? `<iframe class="fm__video"
+                       src="https://www.youtube.com/embed/${fatalityVideo}?start=${f.start}&end=${f.end}&autoplay=1&rel=0"
+                       referrerpolicy="strict-origin-when-cross-origin"
+                       allow="autoplay; encrypted-media"
+                       allowfullscreen></iframe>`
                 : `<p class="fm__empty">Видео фаталити скоро появится.</p>`;
         }
-    }
+    };
 
-    function render() {
+    const render = () => {
         const card = cards[current];
         const data = fighters[card.id] || {};
 
@@ -70,24 +58,24 @@
 
         tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === currentTab));
         renderContent();
-    }
+    };
 
-    function openModal(index) {
+    const openModal = index => {
         current = index;
         currentTab = 'info';
         render();
         modal.classList.add('open');
         document.body.classList.add('no-scroll');
         beep({ freq: 200, endFreq: 60, duration: 0.25, type: 'sawtooth', volume: 0.12 });
-    }
+    };
 
-    function closeModal() {
+    const closeModal = () => {
         modal.classList.remove('open');
         document.body.classList.remove('no-scroll');
-        content.innerHTML = '';          // останавливает видео при закрытии
-    }
+        content.innerHTML = '';
+    };
 
-    function step(dir) {
+    const step = dir => {
         const visible = [...document.querySelectorAll('.fighter:not(.is-hidden)')];
         if (!visible.length) return;
         const pos = visible.indexOf(cards[current]);
@@ -95,7 +83,7 @@
         current = cards.indexOf(next);
         currentTab = 'info';
         render();
-    }
+    };
 
     cards.forEach((card, i) => {
         card.addEventListener('mouseenter', () => beep({ freq: 700, endFreq: 400, duration: 0.08, type: 'triangle' }));
@@ -110,8 +98,6 @@
     modal.querySelector('.fm__close').addEventListener('click', closeModal);
     modal.querySelector('.fm__prev').addEventListener('click', () => step(-1));
     modal.querySelector('.fm__next').addEventListener('click', () => step(1));
-
-// клик по тёмному фону вокруг окна
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
     document.addEventListener('keydown', e => {
@@ -120,5 +106,4 @@
         if (e.key === 'ArrowLeft') step(-1);
         if (e.key === 'ArrowRight') step(1);
     });
-
-})();
+}).catch(err => console.error('Бойцы:', err));

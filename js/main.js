@@ -1,64 +1,37 @@
-
 (() => {
+    const pick = list => list[Math.floor(Math.random() * list.length)];
 
-    async function loadCards(htmlUrl, cssUrl, selector) {
-        const [html, css] = await Promise.all([
-            fetch(htmlUrl).then(r => r.text()),
-            fetch(cssUrl).then(r => r.text())
-        ]);
-
-        const colors = {};
-        for (const m of css.matchAll(/#([\w-]+)\s*\{\s*--color:\s*(#[0-9a-fA-F]{3,8})/g)) {
-            colors[m[1]] = m[2];
-        }
-
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return [...doc.querySelectorAll(selector)].map(el => ({
-            id: el.id,
-            color: colors[el.id] || '#ffffff',
-            img: (el.getAttribute('style').match(/url\(['"]?([^'")]+)/) || [])[1]
-                ?.replace('../', '') || ''
-        }));
-    }
-
-    function pick(list) {
-        return list[Math.floor(Math.random() * list.length)];
-    }
-
-    function shorten(text = '', max = 160) {
+    const shorten = (text = '', max = 160) => {
         if (text.length <= max) return text;
         return text.slice(0, max).replace(/\s+\S*$/, '') + '…';
-    }
+    };
 
-    function render(el, item, data, tag, link) {
+    const render = (el, item, tag, link) => {
         el.style.setProperty('--color', item.color);
         el.style.setProperty('--img', `url('${item.img}')`);
         el.innerHTML = `
-<div class="rcard__img" style="background-image: url('${item.img}')"></div>        <div class="rcard__body">
-            <div class="rcard__tag">${tag}</div>
-            <h3 class="rcard__name">${data.name}</h3>
-            <p class="rcard__text">${shorten(data.info)}</p>
-            <a class="rcard__link" href="${link}">Подробнее</a>
-        </div>`;
-    }
+<div class="rcard__img" style="background-image: url('${item.img}')"></div>
+<div class="rcard__body">
+    <div class="rcard__tag">${tag}</div>
+    <h3 class="rcard__name">${item.name}</h3>
+    <p class="rcard__text">${shorten(item.info)}</p>
+    <a class="rcard__link" href="${link}?search=${encodeURIComponent(item.name)}">Подробнее</a>
+</div>`;
+    };
 
-    Promise.all([
-        loadCards('html/character.html', 'css/character.css', '.fighter'),
-        loadCards('html/kameo.html', 'css/cameo.css', '.kameo')
-    ]).then(([fighterList, cameoList]) => {
+    dataReady.then(({ fighterList, cameoList }) => {
         const fEl = document.getElementById('rFighter');
         const cEl = document.getElementById('rCameo');
+        const rollBtn = document.getElementById('rollBtn');
 
-        function roll() {
-            const f = pick(fighterList.filter(x => fighters[x.id]));
-            const c = pick(cameoList.filter(x => cameos[x.id]));
-            render(fEl, f, fighters[f.id], 'Боец', 'html/character.html');
-            render(cEl, c, cameos[c.id], 'Камео', 'html/kameo.html');
-        }
+        const roll = () => {
+            render(fEl, pick(fighterList), 'Боец', 'html/character.html');
+            render(cEl, pick(cameoList), 'Камео', 'html/kameo.html');
+        };
 
         roll();
 
-        document.getElementById('rollBtn').addEventListener('click', () => {
+        rollBtn.addEventListener('click', () => {
             fEl.classList.add('hide');
             cEl.classList.add('hide');
             setTimeout(() => {
@@ -68,16 +41,12 @@
             }, 300);
         });
     }).catch(err => console.error('Случайный боец:', err));
-
 })();
 
-
-
 (() => {
-
-    
     let audioCtx;
-    function beep({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) {
+
+    const beep = ({ freq = 600, endFreq = 300, duration = 0.12, type = 'square', volume = 0.08 } = {}) => {
         audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const t = audioCtx.currentTime;
@@ -92,10 +61,10 @@
         gain.connect(audioCtx.destination);
         osc.start();
         osc.stop(t + duration);
-    }
+    };
 
-    function save(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
-    function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+    const save = (key, value) => { try { localStorage.setItem(key, value); } catch (e) {} };
+    const load = key => { try { return localStorage.getItem(key); } catch (e) { return null; } };
 
     const pick = list => list[Math.floor(Math.random() * list.length)];
     const shuffle = list => [...list].sort(() => Math.random() - 0.5);
@@ -112,7 +81,6 @@
         });
     });
 
-    /* ---------- игра 1: силуэт ---------- */
     const silBox = document.getElementById('silBox');
     const silImg = document.getElementById('silImg');
     const silOpts = document.getElementById('silOpts');
@@ -129,30 +97,7 @@
     let best = Number(load('silBest')) || 0;
     silBestEl.textContent = best;
 
-    async function loadPool() {
-        const get = url => fetch(url).then(r => {
-            if (!r.ok) throw new Error(`Не найден файл: ${url}`);
-            return r.text();
-        });
-        const [html, css] = await Promise.all([get('html/character.html'), get('css/character.css')]);
-
-        const colors = {};
-        for (const m of css.matchAll(/#([\w-]+)\s*\{\s*--color:\s*(#[0-9a-fA-F]{3,8})/g)) {
-            colors[m[1]] = m[2];
-        }
-
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return [...doc.querySelectorAll('.fighter')]
-            .map(el => ({
-                id: el.id,
-                color: colors[el.id] || '#ffffff',
-                img: ((el.getAttribute('style') || '').match(/url\(['"]?([^'")]+)/) || [])[1]
-                    ?.replace('../', '') || ''
-            }))
-            .filter(x => x.img && fighters[x.id]);
-    }
-
-    function nextRound() {
+    const nextRound = () => {
         locked = false;
         silNext.hidden = true;
         silBox.classList.remove('done');
@@ -171,18 +116,17 @@
         options.forEach(o => {
             const btn = document.createElement('button');
             btn.className = 'sil__opt';
-            btn.textContent = fighters[o.id].name;
+            btn.textContent = o.name;
             btn.addEventListener('click', () => answer(o, btn));
             silOpts.appendChild(btn);
         });
-    }
+    };
 
-    function answer(option, btn) {
+    const answer = (option, btn) => {
         if (locked) return;
         locked = true;
 
-        const right = option.id === target.id;
-        if (right) {
+        if (option.id === target.id) {
             score++;
             streak++;
             btn.classList.add('right');
@@ -196,7 +140,7 @@
             btn.classList.add('wrong');
             beep({ freq: 200, endFreq: 70, duration: 0.3, type: 'sawtooth', volume: 0.12 });
             [...silOpts.children].forEach(b => {
-                if (b.textContent === fighters[target.id].name) b.classList.add('right');
+                if (b.textContent === target.name) b.classList.add('right');
             });
         }
 
@@ -207,13 +151,13 @@
         silStreakEl.textContent = streak;
         silBestEl.textContent = best;
         silNext.hidden = false;
-    }
+    };
 
     silNext.addEventListener('click', nextRound);
 
-    loadPool()
-        .then(list => {
-            pool = list;
+    dataReady
+        .then(({ fighterList }) => {
+            pool = fighterList;
             if (pool.length >= 4) nextRound();
             else silOpts.textContent = 'Не удалось загрузить бойцов.';
         })
@@ -221,12 +165,12 @@
             console.error('Угадай бойца:', err);
             silOpts.textContent = 'Не удалось загрузить бойцов.';
         });
-    /* ---------- игра 2: Test Your Might ---------- */
-    const GOAL = 80;      // нужный процент для удара
-    const TIME = 10;      // секунд на игру
-    const GAIN = 10;       // сколько % даёт верная кнопка
-    const PENALTY = 3;    // сколько % отнимает неверная
-    const DECAY = 5;     // на сколько % в секунду шкала падает сама
+
+    const GOAL = 80;
+    const TIME = 10;
+    const GAIN = 10;
+    const PENALTY = 3;
+    const DECAY = 5;
     const KEYS = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyI', 'KeyJ', 'KeyK', 'KeyL'];
 
     const mFill = document.getElementById('mFill');
@@ -248,27 +192,27 @@
     let bestHit = Number(load('mightBest')) || 0;
     if (bestHit) mBestEl.textContent = `${(TIME - bestHit).toFixed(1)} с`;
 
-    function newKey() {
+    const newKey = () => {
         let next;
         do { next = KEYS[Math.floor(Math.random() * KEYS.length)]; }
         while (next === targetKey);
         targetKey = next;
         mKey.textContent = next.replace('Key', '');
-    }
+    };
 
-    function draw() {
+    const draw = () => {
         mFill.style.width = `${power}%`;
         mPct.textContent = `${Math.round(power)}%`;
         mTimer.textContent = Math.max(0, timeLeft).toFixed(1);
         mBar.classList.toggle('ready', power >= GOAL);
-    }
+    };
 
-    function setMsg(text, cls = '') {
+    const setMsg = (text, cls = '') => {
         mMsg.textContent = text;
         mMsg.className = `might__msg ${cls}`;
-    }
+    };
 
-    function startMight() {
+    const startMight = () => {
         power = 0;
         timeLeft = TIME;
         running = true;
@@ -282,9 +226,9 @@
         draw();
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
-    }
+    };
 
-    function tick(now) {
+    const tick = now => {
         if (!running) return;
         const dt = (now - last) / 1000;
         last = now;
@@ -298,9 +242,9 @@
             return;
         }
         raf = requestAnimationFrame(tick);
-    }
+    };
 
-    function press(code) {
+    const press = code => {
         if (code === targetKey) {
             power = Math.min(100, power + GAIN);
             beep({ freq: 300 + power * 4, endFreq: 200 + power * 3, duration: 0.05, type: 'square', volume: 0.05 });
@@ -312,9 +256,9 @@
             setTimeout(() => mKey.classList.remove('bad'), 120);
         }
         draw();
-    }
+    };
 
-    function strike() {
+    const strike = () => {
         if (!running) return;
         if (power >= GOAL) {
             const used = TIME - timeLeft;
@@ -325,15 +269,14 @@
                 mBestEl.textContent = `${used.toFixed(1)} с`;
             }
         } else {
-
             endMight(false, `Слишком рано! Мощность была всего ${Math.round(power)}%, нужно ${GOAL}%+`);
             mBar.classList.remove('shake');
             void mBar.offsetWidth;
             mBar.classList.add('shake');
         }
-    }
+    };
 
-    function endMight(win, text) {
+    const endMight = (win, text) => {
         running = false;
         cancelAnimationFrame(raf);
         setMsg(text, win ? 'win' : 'lose');
@@ -343,9 +286,9 @@
         mKey.textContent = '?';
         if (win) beep({ freq: 120, endFreq: 40, duration: 0.5, type: 'sawtooth', volume: 0.2 });
         else beep({ freq: 200, endFreq: 70, duration: 0.3, type: 'sawtooth', volume: 0.12 });
-    }
+    };
 
-    function stopMight() {
+    const stopMight = () => {
         if (!running) return;
         running = false;
         cancelAnimationFrame(raf);
@@ -353,10 +296,13 @@
         mStart.hidden = false;
         mKey.textContent = '?';
         setMsg('');
-    }
+    };
 
     mStart.addEventListener('click', startMight);
-    mHit.addEventListener('click', () => { strike(); mHit.blur(); });
+    mHit.addEventListener('click', () => {
+        strike();
+        mHit.blur();
+    });
 
     document.addEventListener('keydown', e => {
         if (!running || activeGame !== 'might') return;
@@ -373,7 +319,7 @@
         }
     });
 
-
     document.addEventListener('keyup', e => {
         if (running && e.code === 'Space') e.preventDefault();
-    });})();
+    });
+})();

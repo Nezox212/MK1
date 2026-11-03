@@ -39,7 +39,7 @@ function initPlayer() {
 }
 
 function onState(e) {
-    if (e.data === YT.PlayerState.PLAYING) hero.classList.add('ready');   // плавно показываем
+    if (e.data === YT.PlayerState.PLAYING) hero.classList.add('ready');
     if (e.data === YT.PlayerState.ENDED) next();
 }
 

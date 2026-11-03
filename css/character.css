@@ -24,7 +24,7 @@ body {
     border: 2px solid black;
     box-sizing: border-box;
     background-color:#0a0a0a;
-    filter: brightness(0.45) grayscale(0.5);   /* затемнены всегда */
+    filter: brightness(0.45) grayscale(0.5);
 
     transition: transform 0.3s ease, border-color 0.3s ease,
     box-shadow 0.3s ease, filter 0.3s ease;

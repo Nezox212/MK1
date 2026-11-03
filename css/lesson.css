@@ -9,13 +9,11 @@
     margin-top: 50px;
 }
 
-/* блоки с текстом: скрыты, пока нет active */
 .tab_content_block {
     display: none;
     width: 700px;
     height: 170px;
     padding: 20px;
-
     border-radius: 12.5%;
     text-align: center;
     flex-direction: column;
@@ -40,12 +38,13 @@
     text-align: justify;
 }
 
-/* кнопки */
 .tab_content_items {
     width: 400px;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    justify-content: center;
+    text-align: center;
 }
 
 .tab_content_item {
@@ -55,19 +54,19 @@
     background: rgb(0 149 255 / 0.75);
     border: 1px solid black;
     font-size: 24px;
-
     cursor: pointer;
     font-family: "Comic Sans MS", cursive;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.tab_content_item.active {          /* было tab_content_item_active */
+.tab_content_item.active {
     background: rgb(0 149 255 / 0.2);
     color: black;
     font-weight: 600;
     border: 1px solid white;
 }
-h4{
+
+h4 {
     color: #20b5ff;
     font-size: 50px;
     margin: 0;
